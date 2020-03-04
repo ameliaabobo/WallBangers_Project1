@@ -1,0 +1,58 @@
+#gameBoard{
+    width: 700px;    
+    height: 620px;
+    border-style:solid;
+    border-width:1px;
+    border-color:black;
+    margin:0;
+    padding:0;
+}
+#scoreBoard{
+    background: silver;
+    width: 680px;    
+    height: 80px;
+    margin:10px 10px;
+    position:relative;
+}
+#playBoard{
+    margin:10px 10px;
+    width:680px;
+    height:500px;
+    position:relative;
+    top:0px;
+    right:0px;
+}
+.Text{
+    border:solid 1px black;
+    height:30px;
+    width:60px;
+    padding-right:5px;
+    text-align:right;
+    top:0px;
+    position:absolute;
+    right:0px;
+}
+#leftwall{
+    background: black;
+    height: 500px;
+    width: 50px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+#rightwall{
+    background: black;
+    height: 500px;
+    width: 50px;
+    position: absolute;
+    top: 0px;
+    right: 630px;
+}
+#player{
+    background: red;
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    top: 470px;
+    right: 600px;
+}
