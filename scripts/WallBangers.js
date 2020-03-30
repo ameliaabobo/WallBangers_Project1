@@ -10,27 +10,30 @@ var wallBangers=function(){
         minY:100
     }
 
-    this.score = 0;   // This is the total number of points the player has accumulated so far
-                    //player(xPos, yPos, minX, maxX, minY, maxY, veloX, veloY)
-    this.ninja = new player(); // Add the coordinates for the ninja. The goal is to have him on the bottom of the right wall essentially
+    this.score = 0; /* points scored */
+    //player(xPos, yPos, minX, maxX, minY, maxY, veloX, veloY)
+    this.ninja = new player(); 
     this.initialize=function(){
-        self.reset();
+        // self.ninja = new Player();
+        // self.reset();
     };
+    
     this.reset=function(){
         this.score = 0;
     }
+
+    /* Updates Score */
     this.updateScore = function(){
         this.score +=1 ;
     }
 
+    /* this function is what is used to update the state of the backend */
     this.update=function(){
-        // self.ninja.xPos += self.ninja.veloX;
-        // self.ninja.yPos += self.ninja.veloY;
         this.ninja.updatePlayer();
         this.updateScore(); 
-        // document.write("updating\n");
         self.ninja.isCollide();
     };
+    // this.initialize();
 
 }
 
@@ -80,11 +83,16 @@ function player(){
 
         this.yPos = (this.yPos < 0  ) ? 0 : this.yPos;
         this.yPos =  (this.yPos > 470 ) ? 470 : this.yPos;
-    
+        
+
         this.veloX = (this.xPos >= 450 || this.xPos <= 0) ? 0: this.veloX;
+        this.yPos = (this.jumping && (this.xPos >= 450 || this.xPos <= 0)) ? this.yPos : this.yPos;
+        // this.veloY = (!this.jumping && (this.xPos >= 450 || this.xPos <= 0)) ? 0: this.veloy;
 
         this.LtoR = (this.xPos == 450) ? true: this.LtoR;
         this.LtoR = (this.xPos == 0) ? false: this.LtoR;
+
+
         
     };
     
