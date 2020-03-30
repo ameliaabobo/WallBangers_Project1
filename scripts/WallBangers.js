@@ -18,22 +18,26 @@ var wallBangers=function(){
     this.bottomOfPreviousSafeZoneLeft=0;*/
     this.ninja = new player(0+this.options.wallWidth, this.options.height, 0, this.options.width-this.options.wallWidth, 
                             this.options.height, this.options.height - 100, 0, 0); // Add the coordinates for the ninja. The goal is to have him on the bottom of the right wall essentially
-    this.safeZones=function(){
+    this.safeZones=function(){ // this will handle generating the safe zones
         this.start = 0; // This will track the beginning of a safe zone. After each safe zone is generated, start will increment by 50
-        var sZones = new Array(30);
+        var sZones = [];
         for(var i = 0; i < 30; i++){
-            sZones[i] = newArray(2); // will be 30 sets of pairs of ranges
-            sZone[i][0]=start; // this will always be the bottom. [i][0] is the bottom of safe zone
-            sZone[i][1] = Math.floor(Math.random()*(50-25)+25)+start; // [i][1] is the top of the safe zone
-            start+=50; // now the bottom of the next safe zone will start at 50 
+            sZones[i] = [0,0]; // will be 30 sets of pairs of ranges
+            sZones[i][0]=this.start; // this will always be the bottom. [i][0] is the bottom of safe zone
+            sZones[i][1] = Math.floor(Math.random()*(50-25)+25)+this.start; // [i][1] is the top of the safe zone
+            this.start+=50; // now the bottom of the next safe zone will start at 50 
         }
+        console.log(sZones);
     }
     this.initialize=function(){
+        this.safeZones();
         self.reset();
     };
+
     this.reset=function(){
         this.score = 0;
     }
+    this.initialize();
 }
 
 var player = function(xPos, yPos, minX, maxX, minY, maxY, veloX, veloY){
