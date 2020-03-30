@@ -71,10 +71,11 @@
     right: 50px;
 }
 #player{
-    background: red;
-    height: 30px;
-    width: 30px;
+    /*background-image: url("assets/Run/adventurer-run-00.png");*/
+    /* background: red; */
+    height: 48px;
+    width: 48px;
     position: absolute;
-    top: 470px;
+    bottom: 0px;
     right: 0px;
 }
