@@ -8,7 +8,7 @@ var wallBangers=function(){
         obstacleSpeed:50,
         minX:50,
         minY:100
-    }
+    } 
 
     this.score = 0; /* points scored */
     //player(xPos, yPos, minX, maxX, minY, maxY, veloX, veloY)
