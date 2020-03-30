@@ -4,9 +4,19 @@ var WallBangersUI=function(){
     this.game=undefined;
      var isPause = true;
     this.running=false;
-    this.img_num = 0;
+    let img_num = 2;
+    // this.img_num = undefined;
+    var playerImgURL =   [
+        "url('/assets/Run/adventurer-run-00.png')",
+        "url('/assets/Run/adventurer-run-01.png')",
+        "url('/assets/Run/adventurer-run-02.png')",
+        "url('/assets/Run/adventurer-run-03.png')",
+        "url('/assets/Run/adventurer-run-04.png')",
+        "url('/assets/Run/adventurer-run-05.png')",
+        ]
     this.initialize=function()
     {
+        // this.img_num = 0;
         //Initialize wallbangers.js Back end
         self.game=new wallBangers();
      
@@ -37,16 +47,13 @@ var WallBangersUI=function(){
 
     };
 
-    // this.drawPlayer=function(){
-    //     if(img_num >= 7){img_num = 0;}
-    //     $('#player').css("background-image", url("/assets/Run/adventurer-run-0\(img_num).png"));
-    //     img_num += 1;
-    //     console.log("\(img_num)");
-
-    //     var x = document.getElementById("player_image");
-    //     //x.;
-
-    // };
+    this.drawPlayer=function(){
+        if(img_num > 6){img_num = 0;}
+        var playerurl = playerImgURL[img_num];
+        $('#player').css("background-image", playerImgURL[img_num] );
+      
+        img_num ++;
+    };
     
 
     this.refreshView=function(){
@@ -61,10 +68,7 @@ var WallBangersUI=function(){
                 var result= self.game.update();
                 self.refreshView(); 
             } 
-            // if(img_num >= 7){img_num = 0;}
-            // $('#player').css("background-image", url("assets/Run/adventurer-run-0\(img_num).png"));
-            // img_num += 1;
-            //this.drawplayer();
+           
     }
 
     this.checkPause = function(){
@@ -74,6 +78,7 @@ var WallBangersUI=function(){
     }
     
     this.initialize();
+    setInterval(this.drawPlayer,500);
     setInterval(this.updateUI,33);
     
 }

@@ -71,7 +71,7 @@
     right: 50px;
 }
 #player{
-    /*background-image: url("assets/Run/adventurer-run-00.png");*/
+    background-image: url("/assets/Run/adventurer-run-00.png");
     /* background: red; */
     height: 48px;
     width: 48px;
