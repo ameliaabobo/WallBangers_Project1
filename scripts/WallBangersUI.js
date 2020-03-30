@@ -36,24 +36,24 @@ var WallBangersUI=function(){
         });
 
     };
-v
-    this.drawPlayer=function(){
-        if(img_num >= 7){img_num = 0;}
-        $('#player').css("background-image", url("/assets/Run/adventurer-run-0\(img_num).png"));
-        img_num += 1;
-        console.log("\(img_num)");
 
-        var x = document.getElementById("player_image");
-        //x.;
+    // this.drawPlayer=function(){
+    //     if(img_num >= 7){img_num = 0;}
+    //     $('#player').css("background-image", url("/assets/Run/adventurer-run-0\(img_num).png"));
+    //     img_num += 1;
+    //     console.log("\(img_num)");
 
-    };
+    //     var x = document.getElementById("player_image");
+    //     //x.;
+
+    // };
     
 
     this.refreshView=function(){
         $('#player').css("right",self.game.ninja.xPos + 'px');
         $('#player').css("bottom",self.game.ninja.yPos + 'px');
         $(".Text").text(self.game.score);
-        self.drawPlayer();
+        // self.drawPlayer();
     };
         
     this.updateUI=function(){
