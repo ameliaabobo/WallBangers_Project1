@@ -4,7 +4,7 @@ var WallBangersUI=function(){
     this.game=undefined;
      var isPause = true;
     this.running=false;
-    let img_num = 2;
+    let img_num = 0;
     // this.img_num = undefined;
     var playerImgURL =   [
         "url('/assets/Run/adventurer-run-00.png')",
@@ -48,13 +48,27 @@ var WallBangersUI=function(){
     };
 
     this.drawPlayer=function(){
-        if(img_num > 6){img_num = 0;}
+        if(img_num > playerImgURL.length - 1){img_num = 0;}
         var playerurl = playerImgURL[img_num];
-        $('#player').css("background-image", playerImgURL[img_num] );
-      
+        console.log(playerurl);
+        $('#player').css("background-image", "url('/assets/Run/adventurer-run-01.png')" );
+        //$('#player').css("background-image", playerImgURL[img_num] );
         img_num ++;
+        console.log(document.getElementById("player").style.right.substr(0,3));
+        
+        // if(document.getElementById("player").style.right.substr(0,3) > 450/2){
+        //     console.log("flip right");
+        //     $('#player').css("transform", "transform:rotateY(180deg)" );
+        // }else if (document.getElementById("player").style.right < 450/2){
+        //     console.log("flip left");
+        //     $('#player').css("transform", "transform:rotateY(0deg)" );
+        // }
+
     };
     
+    this.RotatePlayer=function(){
+        null;
+    }
 
     this.refreshView=function(){
         $('#player').css("right",self.game.ninja.xPos + 'px');
@@ -78,7 +92,7 @@ var WallBangersUI=function(){
     }
     
     this.initialize();
-    setInterval(this.drawPlayer,500);
+    setInterval(this.drawPlayer,200);
     setInterval(this.updateUI,33);
     
 }
