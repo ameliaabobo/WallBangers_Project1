@@ -34,6 +34,8 @@ var WallBangersUI=function(){
             else if(self.game.ninja.jumping && (self.game.ninja.xPos > 30 && self.game.ninja.xPos < 450)){
                 self.game.ninja.jetpack();
             }
+
+            GenerateZone();
         });
 
         $('#resumebtn').on('click',function(){
@@ -68,7 +70,7 @@ var WallBangersUI=function(){
     
     this.RotatePlayer=function(){
         null;
-    }
+    };
 
     this.refreshView=function(){
         $('#player').css("right",self.game.ninja.xPos + 'px');
@@ -83,13 +85,29 @@ var WallBangersUI=function(){
                 self.refreshView(); 
             } 
            
-    }
+    };
+
+    function GenerateZone(){
+        var zone = document.createElement("div");/** generate DIV container */
+        var zoneID = document.createAttribute("id");/** create attribute "ID" */
+        zoneID.value = "zone"; /** Set ID = "wall" */
+        zone.setAttributeNode(zoneID); /**add id="wall" to <div> */
+                                    /**Should generate code similar to 
+                                     * <div id = "wall"> </div>
+                                     */
+        var container = document.getElementById("leftwall");
+        container.insertAdjacentElement("afterbegin",zone);
+
+        console.log("GenerateZone() called");
+        
+    };
+
 
     this.checkPause = function(){
         if(this.isPause == false){
             this.updateUI();
         }
-    }
+    };
     
     this.initialize();
     setInterval(this.drawPlayer,200);

@@ -83,3 +83,11 @@
     bottom: 0px;
     right: 0px;
 }
+
+#zone{
+    background: gray;
+    width: 49px;
+    height: 49px;
+    top: 0px;
+    left: 0px;
+}
