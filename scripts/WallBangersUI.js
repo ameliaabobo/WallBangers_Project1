@@ -35,7 +35,8 @@ var WallBangersUI=function(){
                 self.game.ninja.jetpack();
             }
 
-            GenerateZone();
+            // GenerateZone("rightwall");
+            RandomZone();
         });
 
         $('#resumebtn').on('click',function(){
@@ -86,21 +87,53 @@ var WallBangersUI=function(){
             } 
            
     };
-
-    function GenerateZone(){
+    /**
+     * IMPORTANT: Function only generates zones
+     * 
+     * TODO:
+     *  -   Distinguish between each zone
+     *          - Assign some form of tag attached to each zone
+     *  -   Place each zone in right or left wall
+     *  
+     * 
+     */
+    function GenerateZone(wallLocation){
         var zone = document.createElement("div");/** generate DIV container */
         var zoneID = document.createAttribute("id");/** create attribute "ID" */
+        var zoneTag = document.createAttribute("tag");
+        //zoneTag.value = 
         zoneID.value = "zone"; /** Set ID = "wall" */
         zone.setAttributeNode(zoneID); /**add id="wall" to <div> */
                                     /**Should generate code similar to 
                                      * <div id = "wall"> </div>
                                      */
-        var container = document.getElementById("leftwall");
+        var container = document.getElementById(wallLocation);
         container.insertAdjacentElement("afterbegin",zone);
 
         console.log("GenerateZone() called");
         
     };
+
+
+    /**
+     * Description:
+     *      Randomly generates a zone on the right of left wall
+     */
+    function RandomZone(){
+        var random = Math.floor(Math.random()*2);
+        switch (random){
+            case 1:
+                GenerateZone("rightwall");
+                break;
+            case 0:
+                GenerateZone("leftwall");
+                break;
+        }
+
+        // if(Math.random())
+
+    }
+
 
 
     this.checkPause = function(){
