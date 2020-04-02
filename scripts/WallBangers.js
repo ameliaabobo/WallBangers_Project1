@@ -72,3 +72,13 @@ var player = function(xPos, yPos, minX, maxX, minY, maxY, veloX, veloY){
 
     };
 }
+
+var hole = function(xPos, yPos, minY, maxY){
+    var self = this;
+    this.length = length;
+    this.xPos = xPos;
+    this.yPos = yPos;
+    this.minY = minY;
+    this.maxY = maxY;
+}
+
