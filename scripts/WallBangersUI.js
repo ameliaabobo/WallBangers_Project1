@@ -5,6 +5,7 @@ var WallBangersUI=function(){
      var isPause = true;
     this.running=false;
     let img_num = 0;
+    var zones_array = [];/** Holds Zones */
     // this.img_num = undefined;
     var playerImgURL =   [
         "url('/assets/Run/adventurer-run-00.png')",
@@ -53,11 +54,11 @@ var WallBangersUI=function(){
     this.drawPlayer=function(){
         if(img_num > playerImgURL.length - 1){img_num = 0;}
         var playerurl = playerImgURL[img_num];
-        console.log(playerurl);
+        //console.log(playerurl);
         $('#player').css("background-image", "url('/assets/Run/adventurer-run-01.png')" );
         //$('#player').css("background-image", playerImgURL[img_num] );
         img_num ++;
-        console.log(document.getElementById("player").style.right.substr(0,3));
+       // console.log(document.getElementById("player").style.right.substr(0,3));
         
         // if(document.getElementById("player").style.right.substr(0,3) > 450/2){
         //     console.log("flip right");
@@ -89,30 +90,55 @@ var WallBangersUI=function(){
     };
     /**
      * IMPORTANT: Function only generates zones
-     * 
-     * TODO:
-     *  -   Distinguish between each zone
-     *          - Assign some form of tag attached to each zone
-     *  -   Place each zone in right or left wall
-     *  
-     * 
      */
-    function GenerateZone(wallLocation){
-        var zone = document.createElement("div");/** generate DIV container */
-        var zoneID = document.createAttribute("id");/** create attribute "ID" */
-        var zoneTag = document.createAttribute("tag");
-        //zoneTag.value = 
-        zoneID.value = "zone"; /** Set ID = "wall" */
-        zone.setAttributeNode(zoneID); /**add id="wall" to <div> */
-                                    /**Should generate code similar to 
-                                     * <div id = "wall"> </div>
-                                     */
+    function GenerateZone(wallLocation){  
+        var zone = document.createElement("div");
+        zone.style.top = "10px";
+        zone.style.background = "gray";
+        zone.style.position = "absolute";
+        zone.style.right = 0;
+        zone.style.left = 0;
+        zone.style.height = "49px";
+        zones_array.push(zone);
+        
         var container = document.getElementById(wallLocation);
         container.insertAdjacentElement("afterbegin",zone);
 
-        console.log("GenerateZone() called");
-        
+    }
+
+
+
+    /**
+     * Checks if the zone is off the screen
+     */
+    function CheckZones(){
+
+        // zones_array.forEach();
+
+
     };
+
+    /** Moves the  Zone then calls Check Zone */
+    function MoveZones(){ 
+        var count = 0;
+        zones_array.forEach(zone => {
+            var number = parseInt(zone.style.top,10)+ 10;
+            zone.style.top = number +"px";
+            console.log(zone.style.cssText);
+            count++;
+        });
+        console.log(count);
+
+    };
+
+    /**Calls Foreach loop on array */
+    function UpdateZones(){
+
+        zones_array.forEach(MoveZones);
+
+    };
+
+
 
 
     /**
@@ -124,6 +150,7 @@ var WallBangersUI=function(){
         switch (random){
             case 1:
                 GenerateZone("rightwall");
+
                 break;
             case 0:
                 GenerateZone("leftwall");
@@ -143,6 +170,7 @@ var WallBangersUI=function(){
     };
     
     this.initialize();
+    setInterval(MoveZones,200);
     setInterval(this.drawPlayer,200);
     setInterval(this.updateUI,33);
     

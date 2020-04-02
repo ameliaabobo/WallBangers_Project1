@@ -55,6 +55,7 @@
     right: 580px;
 }
 #middle{
+    background-image: url("/assets/space_background_pack/layers/parallax-space-backgound.png");
     left:100px;
     right:100px;
     top:0;
@@ -90,4 +91,5 @@
     height: 49px;
     top: 0px;
     left: 0px;
+    right: 0px;
 }
