@@ -40,6 +40,9 @@
     right:0px;
 }
 #playBoard{
+    background-image: url(/assets/cloudsscroll.gif);
+    background-repeat: repeat-x;
+    background-size: 50% 100%;
     margin:10px auto;
     width:680px;
     height:500px;
