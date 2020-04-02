@@ -55,6 +55,7 @@
     right: 580px;
 }
 #middle{
+    background-image: url("/assets/space_background_pack/layers/parallax-space-backgound.png");
     left:100px;
     right:100px;
     top:0;
@@ -71,11 +72,24 @@
     right: 50px;
 }
 #player{
-    /*background-image: url("assets/Run/adventurer-run-00.png");*/
-    /* background: red; */
+    background-image: url("/assets/Run/adventurer-run-01.png");
+    background: no-repeat;
+    transform: rotateY(0deg);
+    /* transform: rotateY(0deg); */
+    /* transform:rotateY(0deg); Rotates background around the y axis */
+    /* transform: rotateY(180deg); */
     height: 48px;
     width: 48px;
     position: absolute;
     bottom: 0px;
+    right: 0px;
+}
+
+#zone{
+    background: gray;
+    width: 49px;
+    height: 49px;
+    top: 0px;
+    left: 0px;
     right: 0px;
 }
