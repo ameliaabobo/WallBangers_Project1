@@ -113,7 +113,11 @@ var WallBangersUI=function(){
      */
     function CheckZones(){
 
-        // zones_array.forEach();
+        zones_array.forEach(zone => {
+            if(parseInt(zone.style.top,10) >= 500 ){
+                zones_array.shift();
+            }
+        });
 
 
     };
@@ -128,6 +132,7 @@ var WallBangersUI=function(){
             count++;
         });
         console.log(count);
+        CheckZones();
 
     };
 
