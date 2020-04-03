@@ -7,14 +7,7 @@ var WallBangersUI=function(){
     let img_num = 0;
     var zones_array = [];/** Holds Zones */
     // this.img_num = undefined;
-    var playerImgURL =   [
-        "url('/assets/Run/adventurer-run-00.png')",
-        "url('/assets/Run/adventurer-run-01.png')",
-        "url('/assets/Run/adventurer-run-02.png')",
-        "url('/assets/Run/adventurer-run-03.png')",
-        "url('/assets/Run/adventurer-run-04.png')",
-        "url('/assets/Run/adventurer-run-05.png')",
-        ]
+    
     this.initialize=function()
     {
         // this.img_num = 0;
@@ -61,12 +54,12 @@ var WallBangersUI=function(){
     };
 
     this.drawPlayer=function(){
-        if(img_num > playerImgURL.length - 1){img_num = 0;}
-        var playerurl = playerImgURL[img_num];
+        //if(img_num > playerImgURL.length - 1){img_num = 0;}
+        //var playerurl = playerImgURL[img_num];
         //console.log(playerurl);
-        $('#player').css("background-image", "url('/assets/Run/adventurer-run-01.png')" );
+        //$('#player').css("background-image", "url('/assets/Run/adventurer-run-01.png')" );
         //$('#player').css("background-image", playerImgURL[img_num] );
-        img_num ++;
+       // img_num ++;
        // console.log(document.getElementById("player").style.right.substr(0,3));
         
         // if(document.getElementById("player").style.right.substr(0,3) > 450/2){
@@ -185,7 +178,7 @@ var WallBangersUI=function(){
     
     this.initialize();
     setInterval(MoveZones,200);
-    setInterval(this.drawPlayer,200);
+    //setInterval(this.drawPlayer,200);
     setInterval(this.updateUI,33);
     
 }
