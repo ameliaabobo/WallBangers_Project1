@@ -32,16 +32,37 @@
     position:absolute;
     right:0px;
 }
+#playBoard{
+    background-image: url(/assets/cloudsscroll.gif);
+    background-repeat: repeat-x;
+    background-size: 50% 100%;
+    margin:10px auto;
+    width:680px;
+    height:500px;
+    position:relative;
+    overflow:hidden;
+}
 #leftwall{
-    background: black;
+    background-image: url(/assets/cobblestone.jpg);
+    background-size: 100px;
     height: 500px;
     width: 50px;
     position: absolute;
     top: 0px;
-    right: 0px;
+    right: 580px;
+}
+#middle{
+    /*background-image: url("/assets/space_background_pack/layers/parallax-space-backgound.png"); */
+    left:100px;
+    right:100px;
+    top:0;
+    bottom:0;
+    position:absolute;
+    overflow:hidden;
 }
 #rightwall{
-    background: black;
+    background-image: url(/assets/cobblestone.jpg);
+    background-size: 100px;
     height: 500px;
     width: 50px;
     position: absolute;
@@ -49,9 +70,14 @@
     right: 630px;
 }
 #player{
-    background: red;
-    height: 30px;
-    width: 30px;
+    /*background-image: url("/assets/Run/adventurer-run-01.png");
+    background: no-repeat;
+    transform: rotateY(0deg); */
+    /* transform: rotateY(0deg); */
+    /* transform:rotateY(0deg); Rotates background around the y axis */
+    /* transform: rotateY(180deg); */
+    height: 48px;
+    width: 48px;
     position: absolute;
     top: 470px;
     right: 600px;
