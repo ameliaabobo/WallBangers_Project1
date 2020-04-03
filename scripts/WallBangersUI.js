@@ -5,7 +5,8 @@ var WallBangersUI=function(){
      var isPause = true;
     this.running=false;
     let img_num = 0;
-    var zones_array = [];/** Holds Zones */
+    var zones_leftArray = [];/** Holds Zones */
+    var zones_rightArray = [];
     // this.img_num = undefined;
     var playerImgURL =   [
         "url('/assets/Run/adventurer-run-00.png')",
@@ -83,24 +84,31 @@ var WallBangersUI=function(){
         
     this.updateUI=function(){
             if (!isPause) {
-                var result= self.game.update();
+                var result= self.game.updateUI();
                 self.refreshView(); 
             } 
            
     };
     /**
-     * IMPORTANT: Function only generates zones
+     * 
+     * gets information from .js
      */
-    function GenerateZone(wallLocation){  
+    function GenerateDangerZone(wallLocation, height){  
         var zone = document.createElement("div");
         zone.style.top = "10px";
         zone.style.background = "gray";
         zone.style.position = "absolute";
         zone.style.right = 0;
         zone.style.left = 0;
-        zone.style.height = "49px";
-        zones_array.push(zone);
-        
+        zone.style.height = height + "px";
+        if (wallLocation == "right"){
+            zones_rightArray.push(zone);
+        }
+        else{//
+            zones_leftArray.push(zone);
+        }
+        //create a right wall zone array and a left wall zone array
+        // need the coordinates of the bottom of a danger zone
         var container = document.getElementById(wallLocation);
         container.insertAdjacentElement("afterbegin",zone);
 
@@ -118,8 +126,9 @@ var WallBangersUI=function(){
 
     };
 
+    
     /** Moves the  Zone then calls Check Zone */
-    function MoveZones(){ 
+    /*function MoveZones(){ 
         var count = 0;
         zones_array.forEach(zone => {
             var number = parseInt(zone.style.top,10)+ 10;
@@ -130,36 +139,16 @@ var WallBangersUI=function(){
         console.log(count);
 
     };
+    */
 
     /**Calls Foreach loop on array */
-    function UpdateZones(){
+    /*function UpdateZones(){
 
         zones_array.forEach(MoveZones);
 
-    };
+    };*/
 
 
-
-
-    /**
-     * Description:
-     *      Randomly generates a zone on the right of left wall
-     */
-    function RandomZone(){
-        var random = Math.floor(Math.random()*2);
-        switch (random){
-            case 1:
-                GenerateZone("rightwall");
-
-                break;
-            case 0:
-                GenerateZone("leftwall");
-                break;
-        }
-
-        // if(Math.random())
-
-    }
 
 
 
@@ -170,8 +159,8 @@ var WallBangersUI=function(){
     };
     
     this.initialize();
-    setInterval(MoveZones,200);
-    setInterval(this.drawPlayer,200);
+    //setInterval(MoveZones,200);
+    //setInterval(this.drawPlayer,200);
     setInterval(this.updateUI,33);
     
 }
