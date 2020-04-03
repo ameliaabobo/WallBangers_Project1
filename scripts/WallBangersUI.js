@@ -1,13 +1,11 @@
 var WallBangersUI=function(){
     var self=this;
-
-    var reset = false;
     // var clock = 0;
     this.game=undefined;
-    var isPause = true;
+     var isPause = true;
     this.running=false;
     let img_num = 0;
-    var zones_array;/** Holds Zones */
+    var zones_array = [];/** Holds Zones */
     // this.img_num = undefined;
     var playerImgURL =   [
         "url('/assets/Run/adventurer-run-00.png')",
@@ -17,11 +15,8 @@ var WallBangersUI=function(){
         "url('/assets/Run/adventurer-run-04.png')",
         "url('/assets/Run/adventurer-run-05.png')",
         ]
-    function initialize()
-    {   
-        reset = false;
-        zones_array = [];
-        isPause = true;
+    this.initialize=function()
+    {
         // this.img_num = 0;
         //Initialize wallbangers.js Back end
         self.game=new wallBangers();
@@ -30,13 +25,6 @@ var WallBangersUI=function(){
             $('#GameRunning').hide();
      
         
-        /** Empty left and Right wall */
-        $('#leftwall').empty();
-        $('#rightwall').empty();
-        $('#Interactbtn').text("Start");
-        $('#Resetbtn').hide();
-        self.game.score = 0;
-
         // new KeyboardEvent("onKeyPress",self.game.ninja.jump());
         $('body').keypress(function(event){
             //Keycode for space is 32
@@ -52,20 +40,13 @@ var WallBangersUI=function(){
             RandomZone();
         });
 
-        $('#Interactbtn').on('click',function(){
-            if(isPause == false){
-                $('#Interactbtn').text("Resume");
-                $('#Resetbtn').show();
-                isPause = true;
-            }else{
-                $('#Interactbtn').text("Pause");
-                isPause = false;
-                $('#Resetbtn').hide();
-            }
+        $('#resumebtn').on('click',function(){
+            $('#resumebtn').text("Resume");
+            isPause = false;
         });
 
-        $('#Resetbtn').on('click',function(){
-            reset = true;
+        $('#pausebtn').on('click',function(){
+            isPause = true;
         });
 
     };
@@ -105,15 +86,12 @@ var WallBangersUI=function(){
                 var result= self.game.update();
                 self.refreshView(); 
             } 
-            if(reset){
-                initialize();
-            }
            
     };
     /**
      * IMPORTANT: Function only generates zones
      */
-    function GenerateZone(wallLocation,speed, height){  
+    function GenerateZone(wallLocation){  
         var zone = document.createElement("div");
         zone.style.top = "10px";
         zone.style.background = "gray";
@@ -143,11 +121,6 @@ var WallBangersUI=function(){
 
 
     };
-
-    function DeleteZones(){
-
-        zones_array.forEach()
-    }
 
     /** Moves the  Zone then calls Check Zone */
     function MoveZones(){ 
@@ -201,7 +174,7 @@ var WallBangersUI=function(){
         }
     };
     
-    initialize();
+    this.initialize();
     setInterval(MoveZones,200);
     setInterval(this.drawPlayer,200);
     setInterval(this.updateUI,33);
