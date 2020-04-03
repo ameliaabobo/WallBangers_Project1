@@ -7,14 +7,7 @@ var WallBangersUI=function(){
     let img_num = 0;
     var zones_array = [];/** Holds Zones */
     // this.img_num = undefined;
-    var playerImgURL =   [
-        "url('/assets/Run/adventurer-run-00.png')",
-        "url('/assets/Run/adventurer-run-01.png')",
-        "url('/assets/Run/adventurer-run-02.png')",
-        "url('/assets/Run/adventurer-run-03.png')",
-        "url('/assets/Run/adventurer-run-04.png')",
-        "url('/assets/Run/adventurer-run-05.png')",
-        ]
+    
     this.initialize=function()
     {
         // this.img_num = 0;
@@ -23,7 +16,9 @@ var WallBangersUI=function(){
      
             $('#GameStopped').show();
             $('#GameRunning').hide();
-     
+
+            $('#Resetbtn').hide()
+
         
         // new KeyboardEvent("onKeyPress",self.game.ninja.jump());
         $('body').keypress(function(event){
@@ -40,24 +35,31 @@ var WallBangersUI=function(){
             RandomZone();
         });
 
-        $('#resumebtn').on('click',function(){
-            $('#resumebtn').text("Resume");
-            isPause = false;
+        $('#Interactbtn').on('click',function(){
+            isPause = !isPause;
+            if(isPause == false){
+            $('#Resetbtn').hide();
+            $('#Interactbtn').text("Pause");
+            }else 
+            {
+                $('#Interactbtn').text("Resume");
+                $('#Resetbtn').show();
+            }
         });
 
-        $('#pausebtn').on('click',function(){
+        $('#Resetebtn').on('click',function(){
             isPause = true;
         });
 
     };
 /*
     this.drawPlayer=function(){
-        if(img_num > playerImgURL.length - 1){img_num = 0;}
-        var playerurl = playerImgURL[img_num];
+        //if(img_num > playerImgURL.length - 1){img_num = 0;}
+        //var playerurl = playerImgURL[img_num];
         //console.log(playerurl);
-        $('#player').css("background-image", "url('/assets/Run/adventurer-run-01.png')" );
+        //$('#player').css("background-image", "url('/assets/Run/adventurer-run-01.png')" );
         //$('#player').css("background-image", playerImgURL[img_num] );
-        img_num ++;
+       // img_num ++;
        // console.log(document.getElementById("player").style.right.substr(0,3));
         
         // if(document.getElementById("player").style.right.substr(0,3) > 450/2){
@@ -113,7 +115,11 @@ var WallBangersUI=function(){
      */
     function CheckZones(){
 
-        // zones_array.forEach();
+        zones_array.forEach(zone => {
+            if(parseInt(zone.style.top,10) >= 500 ){
+                zones_array.shift();
+            }
+        });
 
 
     };
@@ -128,6 +134,7 @@ var WallBangersUI=function(){
             count++;
         });
         console.log(count);
+        CheckZones();
 
     };
 
@@ -137,8 +144,6 @@ var WallBangersUI=function(){
         zones_array.forEach(MoveZones);
 
     };
-
-
 
 
     /**
@@ -156,9 +161,6 @@ var WallBangersUI=function(){
                 GenerateZone("leftwall");
                 break;
         }
-
-        // if(Math.random())
-
     }
 
 
@@ -171,7 +173,7 @@ var WallBangersUI=function(){
     
     this.initialize();
     setInterval(MoveZones,200);
-    setInterval(this.drawPlayer,200);
+    //setInterval(this.drawPlayer,200);
     setInterval(this.updateUI,33);
     
 }

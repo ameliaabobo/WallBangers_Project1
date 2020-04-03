@@ -51,7 +51,6 @@
 }
 #leftwall{
     background-image: url(/assets/cobblestone.jpg);
-    background-size: 100px;
     height: 500px;
     width: 50px;
     position: absolute;
@@ -59,7 +58,7 @@
     right: 580px;
 }
 #middle{
-    /*background-image: url("/assets/space_background_pack/layers/parallax-space-backgound.png"); */
+    /* background-image: url("/assets/space_background_pack/layers/parallax-space-backgound.png"); */
     left:100px;
     right:100px;
     top:0;
@@ -69,7 +68,6 @@
 }
 #rightwall{
     background-image: url(/assets/cobblestone.jpg);
-    background-size: 100px;
     height: 500px;
     width: 50px;
     position: absolute;
@@ -77,9 +75,9 @@
     right: 50px;
 }
 #player{
-    /*background-image: url("/assets/Run/adventurer-run-01.png");
+    /* background-image: url("/assets/Run/adventurer-run-01.png"); */
     background: no-repeat;
-    transform: rotateY(0deg); */
+    transform: rotateY(0deg);
     /* transform: rotateY(0deg); */
     /* transform:rotateY(0deg); Rotates background around the y axis */
     /* transform: rotateY(180deg); */
