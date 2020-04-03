@@ -120,7 +120,12 @@ var wallBangers=function(){
 
 
     this.reset=function(){
-        this.score = 0;
+    zones_leftArrayHeight = [];
+    zones_rightArrayHeight = [];
+    collec_leftArrayHeight = [];
+    collec_rightArrayHeight = [];
+    this.score=0; // This is the total number of points the player has accumulated so far
+    this.ninja = new player()
     }
 
     this.updateScore = function(){
@@ -149,6 +154,18 @@ var player = function(xPos, yPos, minX, maxX, minY, maxY, veloX, veloY){
     var cLeft = [];
     this.rightWall = true; // Determines which wall player is on. If on right, bool = true. If on left, bool = false.
     this.initialize = function(){};
+    this.reset = function(){
+        zRight = [];
+        zLeft = [];
+        cRight = [];
+        cLeft = [];
+        this.jumping = false;
+        this.xPos = 0;
+        this.yPos = 0;
+        this.veloX = 0;
+        this.veloY = 0;
+        this.isDead = false;
+    }
     this.gravity = function(){
         this.veloY -=10;
     }
