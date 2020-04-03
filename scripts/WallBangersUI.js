@@ -50,7 +50,7 @@ var WallBangersUI=function(){
         });
 
     };
-
+/*
     this.drawPlayer=function(){
         if(img_num > playerImgURL.length - 1){img_num = 0;}
         var playerurl = playerImgURL[img_num];
@@ -69,7 +69,7 @@ var WallBangersUI=function(){
         // }
 
     };
-    
+    */
     this.RotatePlayer=function(){
         null;
     };
