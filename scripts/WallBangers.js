@@ -4,19 +4,21 @@ var wallBangers=function(){
         height:500,
         width:680,
         wallHeight:500,
-        wallWidth:50, // idea here is to have the wall width be half the width of the environment
+        wallWidth:50,// idea here is to have the wall width be half the width of the environment
         obstacleSpeed:50,
         obstacleStartHeight:0,
         minX:50,
         minY:100
-    }
-    this.score=0; // This is the total number of points the player has accumulated so far
-                    //player(xPos, yPos, minX, maxX, minY, maxY, veloX, veloY)
-    this.ninja = new player(0+this.options.wallWidth, this.options.height, 0, this.options.width-this.options.wallWidth, 
-                            this.options.height, this.options.height - 100, 0, 0); // Add the coordinates for the ninja. The goal is to have him on the bottom of the right wall essentially
+    } 
+
+    this.score = 0; /* points scored */
+    //player(xPos, yPos, minX, maxX, minY, maxY, veloX, veloY)
+    this.ninja = new player(); 
     this.initialize=function(){
-        self.reset();
+        // self.ninja = new Player();
+        // self.reset();
     };
+    
     this.reset=function(){
         this.score = 0;
     }

@@ -1,0 +1,95 @@
+#gameBoard{
+    width: 700px;    
+    height: 620px;
+    border-style:solid;
+    border-width:1px;
+    border-color:black;
+    margin:10px auto;
+    padding:0;
+}
+#scoreBoard{
+    background: silver;
+    width: 680px;    
+    height: 80px;
+    margin:10px auto;
+    position:relative;
+}
+/* comment */
+#name{
+    margin:auto;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+.Scores{
+    position:absolute;
+    margin:5px 500px;
+    padding-right:70px;
+    font-weight:bold;
+    font-size:26px;
+    text-align:left;
+}
+.Text{
+    border:solid 1px black;
+    height:30px;
+    width:60px;
+    padding-right:5px;
+    text-align:right;
+    top:0px;
+    position:absolute;
+    right:0px;
+}
+#playBoard{
+    margin:10px auto;
+    width:680px;
+    height:500px;
+    position:relative;
+    overflow:hidden;
+}
+#leftwall{
+    background: black;
+    height: 500px;
+    width: 50px;
+    position: absolute;
+    top: 0px;
+    right: 580px;
+}
+#middle{
+    background-image: url("/assets/space_background_pack/layers/parallax-space-backgound.png");
+    left:100px;
+    right:100px;
+    top:0;
+    bottom:0;
+    position:absolute;
+    overflow:hidden;
+}
+#rightwall{
+    background: black;
+    height: 500px;
+    width: 50px;
+    position: absolute;
+    top: 0px;
+    right: 50px;
+}
+#player{
+    background-image: url("/assets/Run/adventurer-run-01.png");
+    background: no-repeat;
+    transform: rotateY(0deg);
+    /* transform: rotateY(0deg); */
+    /* transform:rotateY(0deg); Rotates background around the y axis */
+    /* transform: rotateY(180deg); */
+    height: 48px;
+    width: 48px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
+#zone{
+    background: gray;
+    width: 49px;
+    height: 49px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+}
