@@ -87,24 +87,15 @@ var WallBangersUI=function(){
         // self.drawPlayer();
     };
 
-    function getArray(){
-        this.game.zones_rightArray;
-        
-        game.zones_rightArray.forEach(height =>{ 
+    function getArray(){ // the height property is being obtained from Wallbangers.js
+        self.game.zones_rightArrayHeight.forEach(height =>{ 
             GenerateDangerZone("rightwall", height)
         });
-        game.zones_leftArray.forEach(height =>{ 
+        self.game.zones_leftArrayHeight.forEach(height =>{ 
             GenerateDangerZone("leftwall", height)
         });
     }
         
-    this.updateUI=function(){
-            if (!isPause) {
-                var result= self.game.update();
-                self.refreshView(); 
-            } 
-           
-    };
     /**
      * 
      * gets information from .js
@@ -117,21 +108,27 @@ var WallBangersUI=function(){
         zone.style.right = 0;
         zone.style.left = 0;
         zone.style.height = height + "px";
-        // if (wallLocation == "right"){
-        //     zones_rightArray.push(zone);
-        // }
-        // else{//
-        //     zones_leftArray.push(zone);
-        // }
+        if (wallLocation == "right"){
+             zones_rightArray.push(zone);
+         }
+        else{//
+             zones_leftArray.push(zone);
+        }
         //create a right wall zone array and a left wall zone array
         // need the coordinates of the bottom of a danger zone
         var container = document.getElementById(wallLocation);
         container.insertAdjacentElement("afterbegin",zone);
-
     }
 
-
-
+    this.updateUI=function(){
+        if (!isPause) {
+            var result= self.game.update();
+            self.refreshView(); 
+            self.game.zRight = zones_rightArray;
+            self.game.zLeft = zones_leftArray;
+        } 
+       
+};
     /**
      * Checks if the zone is off the screen
      */
@@ -140,12 +137,14 @@ var WallBangersUI=function(){
         zones_leftArray.forEach(zone => {
             if(parseInt(zone.style.top,10) >= 500 ){
                 zones_leftArray.shift();
+                self.game.zones_leftArrayHeight.shift();
             }
         });
 
         zones_rightArray.forEach(zone => {
             if(parseInt(zone.style.top,10) >= 500 ){
                 zones_rightArray.shift();
+                self.game.zones_rightArrayHeight.shift();
             }
         });
 

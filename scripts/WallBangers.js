@@ -10,8 +10,10 @@ var wallBangers=function(){
         minX:50,
         minY:50
     }
-    var zones_leftArray = [];
-    var zones_rightArray = [];
+    var zones_leftArrayHeight = [];
+    var zones_rightArrayHeight = [];
+    var collec_leftArrayHeight = [];
+    var collec_rightArrayHeight = [];
     this.score=0; // This is the total number of points the player has accumulated so far
     this.ninja = new player()
     
@@ -35,13 +37,26 @@ var wallBangers=function(){
         }
     }
 
+    this.RandomCollec = function(){
+        var rand = Math.floor(Math.random()*2);
+        switch(rand){
+            case 1:
+                GenerateCollec("right");
+
+                break;
+            case 0:
+                GenerateCollec("left");
+
+                break;
+        }
+    }
     /**
      * IMPORTANT: Function only generates zones
      */
     function GenerateDZone(wallLocation){ //ranges between 50 and 75 in height
         if (wallLocation == "rightwall"){//generated on right wall
             //var num = Math.floor(Math.random()*(75-50)+50);
-            zones_rightArray.push(Math.floor(Math.random()*(75-50)+50));
+            zones_rightArrayHeight.push(Math.floor(Math.random()*(75-50)+50));
             
             //zones_rightArray.push(num);
             /*
@@ -50,10 +65,10 @@ var wallBangers=function(){
                 console.log("in right array ", zones_rightArray[i]);
             }
             */
-        }
+        } 
         else{//generated on left wall
             //var num1 = Math.floor(Math.random()*(75-50)+50);
-            zones_leftArray.push(Math.floor(Math.random()*(75-50)+50));
+            zones_leftArrayHeight.push(Math.floor(Math.random()*(75-50)+50));
             //zones_leftArray.push(num1);
             /*
             console.log("num1=", num1)
@@ -61,9 +76,17 @@ var wallBangers=function(){
                 console.log("in left array ", zones_leftArray[j]);
             }
             */
-        }
+        } // height is then passed into WallbangersUI.js
     }
 
+    function GenerateCollec(wallLocation){
+        if(wallLocation == "rightwall"){
+            collec_rightArrayHeight.push(30);
+        }
+        else{
+            collec_leftArrayHeight.push(30);
+        }
+    }
     /*this.safeZones=function(){ // this will handle generating the safe zones
         this.start = 0; // This will track the beginning of a safe zone. After each safe zone is generated, start will increment by 50
         var sZones = [];
@@ -82,8 +105,17 @@ var wallBangers=function(){
 
     this.update=function(){
         this.ninja.updatePlayer();
-        this.updateScore(); 
-        self.ninja.isCollide();
+        this.updateScore();
+        switch(this.player.rightWall){
+            case true:
+                self.ninja.isCollide("rightwall");
+
+                break;
+            case false:
+                self.ninja.isCollide("leftwall");
+
+                break;
+        } 
     };
 
 
@@ -109,7 +141,10 @@ var player = function(xPos, yPos, minX, maxX, minY, maxY, veloX, veloY){
     this.minY = minY;
     this.maxY = maxY;
     this.veloX = veloX;
+    this.isDead = false;
     this.veloY = veloY;
+    var zRight = [];
+    var zLeft = [];
     this.rightWall = true; // Determines which wall player is on. If on right, bool = true. If on left, bool = false.
     this.initialize = function(){};
     this.gravity = function(){
@@ -125,9 +160,11 @@ var player = function(xPos, yPos, minX, maxX, minY, maxY, veloX, veloY){
             if(this.LtoR == true){
                     this.veloX -= 20;
                     this.jumping = true;
+                    this.rightWall = true;
                 }else{
                     this.veloX += 20;  
                     this.jumping = true;
+                    this.rightWall = false;
                 }    
             this.veloY = 50;
         }
@@ -146,9 +183,24 @@ var player = function(xPos, yPos, minX, maxX, minY, maxY, veloX, veloY){
 
 
 
-    this.isCollide=function(/*add possible parameters*/){
-       
-        this.jumping = (this.xPos >= 450 || this.xPos <= 0) ? false : this.jumping; 
+    this.isCollide=function(wallLocation){
+        if(wallLocation == "rightwall"){
+            zRight.forEach(zone => {
+                this.bottom = zone.style.top + zone.style.height; // this is so we can get the range of collidable areas. Essentially if the player y location is greater than or equal to the top, but less than or equal to the bottom, then we have a collision
+                if(this.yPos >= zone.style.top && this.yPos <= this.bottom){
+                    this.isDead = true;
+                }
+            })
+        }
+        else{
+            zLeft.forEach(zone => {
+                this.bottom = zone.style.top + zone.style.height;
+                if(this.yPos >= zone.style.top && this.yPos <= this.bottom){
+                    this.isDead = true;
+                }
+            })
+        }
+        /*this.jumping = (this.xPos >= 450 || this.xPos <= 0) ? false : this.jumping; 
 
         this.xPos = (this.xPos > 450 ) ? 450 : this.xPos;
         this.xPos =  (this.xPos < 0 ) ? 0 : this.xPos;
@@ -163,7 +215,7 @@ var player = function(xPos, yPos, minX, maxX, minY, maxY, veloX, veloY){
 
         this.LtoR = (this.xPos == 450) ? true: this.LtoR;
         this.LtoR = (this.xPos == 0) ? false: this.LtoR;
-
+        */
 
         
     };
