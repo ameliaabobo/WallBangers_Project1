@@ -73,6 +73,15 @@ function player(){
        
     };
 
+    this.Flip=function(){
+        if(this.xPos > 450/2){
+            console.log("flip right");
+            $('#player').css({transform: 'rotateY(180deg)'} );
+        }else if (this.xPos < 450/2){
+            console.log("flip left");
+            $('#player').css({transform: 'rotateY(0deg)'} );
+        }
+    }
     
     this.isCollide=function(/*add possible parameters*/){
        
@@ -104,6 +113,7 @@ function player(){
         }else{
             // this.jetpack();
         }
+        this.Flip();
 
     };
     
