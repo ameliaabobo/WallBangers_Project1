@@ -8,12 +8,13 @@ var WallBangersUI=function(){
     var zones_array = [];/** Holds Zones */
     // this.img_num = undefined;
     
-    this.initialize=function()
-    {
+    function Initialize(){
+    
         // this.img_num = 0;
         //Initialize wallbangers.js Back end
         self.game=new wallBangers();
-     
+
+        console.log(isPause);
             $('#GameStopped').show();
             $('#GameRunning').hide();
 
@@ -47,29 +48,42 @@ var WallBangersUI=function(){
             }
         });
 
-        $('#Resetebtn').on('click',function(){
-            isPause = true;
+        $('#Resetbtn').on('click',function(){
+            Reset();
+            $('#Resetbtn').hide();
+            console.log("RESTe CALLED");
         });
 
     };
 
-    this.drawPlayer=function(){
-        //if(img_num > playerImgURL.length - 1){img_num = 0;}
-        //var playerurl = playerImgURL[img_num];
-        //console.log(playerurl);
-        //$('#player').css("background-image", "url('/assets/Run/adventurer-run-01.png')" );
-        //$('#player').css("background-image", playerImgURL[img_num] );
-       // img_num ++;
-       // console.log(document.getElementById("player").style.right.substr(0,3));
-        
-        // if(document.getElementById("player").style.right.substr(0,3) > 450/2){
-        //     console.log("flip right");
-        //     $('#player').css("transform", "transform:rotateY(180deg)" );
-        // }else if (document.getElementById("player").style.right < 450/2){
-        //     console.log("flip left");
-        //     $('#player').css("transform", "transform:rotateY(0deg)" );
-        // }
 
+    function Reset(){
+
+        var isPause = true;
+        this.running=false;
+        let img_num = 0;
+       
+        /**Delete Zones */
+        while (zones_array.length > 0) {
+              zones_array.shift();
+        }
+
+        $('#Interactbtn').text("Start");
+        $('#leftwall').empty();
+        $('#rightwall').empty();
+        self.game.score = 0;
+
+        self.game.ninja.xPos = 0;
+        self.game.ninja.yPos = 0;
+        $('#player').css("bottom","0px");
+        $('#player').css("right","0px");
+    
+    }
+
+
+
+    this.drawPlayer=function(){
+      
     };
     
     this.RotatePlayer=function(){
@@ -98,8 +112,9 @@ var WallBangersUI=function(){
         zone.style.top = "10px";
         zone.style.background = "gray";
         zone.style.position = "absolute";
-        zone.style.right = 0;
-        zone.style.left = 0;
+        zone.style.width = "50%";
+        if(wallLocation == "leftwall") zone.style.right = 0;
+        else zone.style.left = 0;
         zone.style.height = "49px";
         zones_array.push(zone);
         
@@ -108,20 +123,15 @@ var WallBangersUI=function(){
 
     }
 
-
-
     /**
      * Checks if the zone is off the screen
      */
     function CheckZones(){
-
         zones_array.forEach(zone => {
             if(parseInt(zone.style.top,10) >= 500 ){
                 zones_array.shift();
             }
         });
-
-
     };
 
     /** Moves the  Zone then calls Check Zone */
@@ -135,7 +145,6 @@ var WallBangersUI=function(){
         });
         console.log(count);
         CheckZones();
-
     };
 
     /**Calls Foreach loop on array */
@@ -168,10 +177,11 @@ var WallBangersUI=function(){
     this.checkPause = function(){
         if(this.isPause == false){
             this.updateUI();
+
         }
     };
     
-    this.initialize();
+    Initialize();
     setInterval(MoveZones,200);
     //setInterval(this.drawPlayer,200);
     setInterval(this.updateUI,33);
