@@ -12,10 +12,13 @@ var wallBangers=function(){
 
     this.score = 0; /* points scored */
     //player(xPos, yPos, minX, maxX, minY, maxY, veloX, veloY)
+    var zones_leftArray = [];
+    var zones_rightArray = [];
     this.ninja = new player(); 
     this.initialize=function(){
         // self.ninja = new Player();
         // self.reset();
+        this.RandomZone();
     };
     
     this.reset=function(){
@@ -32,8 +35,61 @@ var wallBangers=function(){
         this.ninja.updatePlayer();
         this.updateScore(); 
         self.ninja.isCollide();
+        this.RandomZone();
     };
-    // this.initialize();
+
+
+    /**
+     * Description:
+     *      Randomly generates a zone on the right or left wall
+     */
+    this.RandomZone=function(){
+        console.log("calling randomzone")
+        var random = Math.floor(Math.random()*2);
+        switch (random){
+            case 1:
+                GenerateDZone("right");
+
+                break;
+            case 0:
+                GenerateDZone("left");
+                break;
+        }
+    }
+
+    /**
+     * IMPORTANT: Function only generates zones
+     */
+    function GenerateDZone(wallLocation){ //ranges between 50 and 75 in height
+        if (wallLocation == "right"){//generated on right wall
+            //var num = Math.floor(Math.random()*(75-50)+50);
+            zones_rightArray.push(Math.floor(Math.random()*(75-50)+50));
+            /*
+            zones_rightArray.push(num);
+            console.log("num =", num)
+            var count0 = 0;
+            zones_rightArray.forEach(height =>{
+                console.log("in right array ", height);
+                count0++;
+            });
+            console.log("count0 = ", count0);
+            */
+        }
+        else{//generated on left wall
+            //var num1 = Math.floor(Math.random()*(75-50)+50);
+            zones_leftArray.push(Math.floor(Math.random()*(75-50)+50));
+            /*
+            zones_leftArray.push(num1);
+            console.log("num1=", num1)
+            var count = 0;
+            zones_leftArray.forEach(height =>{
+                console.log("in left array ", height);
+                count++;
+            });
+            console.log("count = ", count);
+            */
+        }
+    }
 
 }
 
@@ -49,6 +105,7 @@ function player(){
     this.maxY = 0;
     this.veloX = 0;
     this.veloY = 0;
+    this.rightWall = true; //determines which wall the player is on
     this.initialize = function(){};
     this.gravity = function(){
         this.veloY -= 10;
@@ -63,7 +120,7 @@ function player(){
             if(this.LtoR == true){
                     this.veloX -= 20;
                     this.jumping = true;
-                }else{
+            }else{
                     this.veloX += 20;  
                     this.jumping = true;
                 }    

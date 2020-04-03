@@ -2,15 +2,16 @@ var WallBangersUI=function(){
     var self=this;
     // var clock = 0;
     this.game=undefined;
-     var isPause = true;
+    var isPause = true;
     this.running=false;
     let img_num = 0;
-    var zones_array = [];/** Holds Zones */
+    var zones_leftArray = [];/** Holds Zones */
+    var zones_rightArray = [];
     // this.img_num = undefined;
     
     this.initialize=function()
     {
-        // this.img_num = 0;
+        //this.img_num = 0;
         //Initialize wallbangers.js Back end
         self.game=new wallBangers();
      
@@ -32,7 +33,7 @@ var WallBangersUI=function(){
             }
 
             // GenerateZone("rightwall");
-            RandomZone();
+            self.game.RandomZone();
         });
 
         $('#Interactbtn').on('click',function(){
@@ -90,50 +91,83 @@ var WallBangersUI=function(){
             } 
            
     };
+    
     /**
-     * IMPORTANT: Function only generates zones
+     * 
+     * gets information from .js
      */
-    function GenerateZone(wallLocation){  
+    function GenerateDangerZone(wallLocation, height){  
         var zone = document.createElement("div");
         zone.style.top = "10px";
         zone.style.background = "gray";
         zone.style.position = "absolute";
         zone.style.right = 0;
         zone.style.left = 0;
-        zone.style.height = "49px";
-        zones_array.push(zone);
-        
+        zone.style.height = height + "px";
+        // if (wallLocation == "right"){
+        //     zones_rightArray.push(zone);
+        // }
+        // else{//
+        //     zones_leftArray.push(zone);
+        // }
+        //create a right wall zone array and a left wall zone array
+        // need the coordinates of the bottom of a danger zone
         var container = document.getElementById(wallLocation);
         container.insertAdjacentElement("afterbegin",zone);
 
     }
 
-
+    function getArray(){
+        if(self.game.zones_leftArray != undefined){
+            self.game.zones_leftArray.forEach(height =>{ 
+                GenerateDangerZone("leftwall", height)
+            });
+        }
+        if(self.game.zones_rightArray != undefined){
+                    self.game.zones_rightArray.forEach(height =>{ 
+            GenerateDangerZone("rightwall", height)
+        });
+        }
+    }
 
     /**
      * Checks if the zone is off the screen
      */
     function CheckZones(){
-
-        zones_array.forEach(zone => {
+        if(self.game.zones_leftArray != undefined){
+            self.game.zones_leftArray.forEach(zone => {
             if(parseInt(zone.style.top,10) >= 500 ){
-                zones_array.shift();
+                self.game.zones_leftArray.shift();
             }
         });
-
-
+        }
+        if(self.game.zones_rightArray != undefined){
+            self.game.zones_rightArray.forEach(zone => {
+            if(parseInt(zone.style.top,10) >= 500 ){
+                self.game.zones_rightArray.shift();
+            }
+        });
+        }
     };
 
     /** Moves the  Zone then calls Check Zone */
     function MoveZones(){ 
-        var count = 0;
-        zones_array.forEach(zone => {
+        var rightCount = 0;
+        var leftCount = 0;
+        zones_rightArray.forEach(zone => {
             var number = parseInt(zone.style.top,10)+ 10;
             zone.style.top = number +"px";
             console.log(zone.style.cssText);
-            count++;
+            rightCount++;
         });
-        console.log(count);
+        zones_leftArray.forEach(zone => {
+            var number = parseInt(zone.style.top,10)+ 10;
+            zone.style.top = number +"px";
+            console.log(zone.style.cssText);
+            leftCount++;
+        });
+        console.log("Right Count: " + rightCount);
+        console.log("Left Count: " + leftCount);
         CheckZones();
 
     };
@@ -146,24 +180,6 @@ var WallBangersUI=function(){
     };
 
 
-    /**
-     * Description:
-     *      Randomly generates a zone on the right of left wall
-     */
-    function RandomZone(){
-        var random = Math.floor(Math.random()*2);
-        switch (random){
-            case 1:
-                GenerateZone("rightwall");
-
-                break;
-            case 0:
-                GenerateZone("leftwall");
-                break;
-        }
-    }
-
-
 
     this.checkPause = function(){
         if(this.isPause == false){
@@ -173,6 +189,7 @@ var WallBangersUI=function(){
     
     this.initialize();
     setInterval(MoveZones,200);
+    setInterval(getArray, 100);
     //setInterval(this.drawPlayer,200);
     setInterval(this.updateUI,33);
     
