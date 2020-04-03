@@ -84,7 +84,7 @@ var WallBangersUI=function(){
         
     this.updateUI=function(){
             if (!isPause) {
-                var result= self.game.updateUI();
+                var result= self.game.update();
                 self.refreshView(); 
             } 
            

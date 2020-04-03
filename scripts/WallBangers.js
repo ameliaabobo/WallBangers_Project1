@@ -74,6 +74,13 @@ var wallBangers=function(){
         self.reset();
     };
 
+    this.update=function(){
+        this.ninja.updatePlayer();
+        this.updateScore(); 
+        self.ninja.isCollide();
+    };
+
+
     this.reset=function(){
         this.score = 0;
     }
