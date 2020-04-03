@@ -8,14 +8,7 @@ var WallBangersUI=function(){
     var zones_leftArray = [];/** Holds Zones */
     var zones_rightArray = [];
     // this.img_num = undefined;
-    var playerImgURL =   [
-        "url('/assets/Run/adventurer-run-00.png')",
-        "url('/assets/Run/adventurer-run-01.png')",
-        "url('/assets/Run/adventurer-run-02.png')",
-        "url('/assets/Run/adventurer-run-03.png')",
-        "url('/assets/Run/adventurer-run-04.png')",
-        "url('/assets/Run/adventurer-run-05.png')",
-        ]
+    
     this.initialize=function()
     {
         // this.img_num = 0;
@@ -24,52 +17,64 @@ var WallBangersUI=function(){
      
             $('#GameStopped').show();
             $('#GameRunning').hide();
-     
+
+            $('#Resetbtn').hide()
+
         
         // new KeyboardEvent("onKeyPress",self.game.ninja.jump());
         $('body').keypress(function(event){
             //Keycode for space is 32
             if (event.which==32 && !self.game.ninja.jumping && (self.game.ninja.xPos != 0 ||self.game.ninja.xPos != 450) ) 
             {
+                console.log("JUMP KEYPRESS");
                 self.game.ninja.jump();
+                console.log("NINJA SHOULD BE JUMPING")
+                
             }
             else if(self.game.ninja.jumping && (self.game.ninja.xPos > 30 && self.game.ninja.xPos < 450)){
                 self.game.ninja.jetpack();
             }
 
             // GenerateZone("rightwall");
-            RandomZone();
+            //RandomZone();
         });
 
-        $('#resumebtn').on('click',function(){
-            $('#resumebtn').text("Resume");
-            isPause = false;
+        $('#Interactbtn').on('click',function(){
+            isPause = !isPause;
+            if(isPause == false){
+            $('#Resetbtn').hide();
+            $('#Interactbtn').text("Pause");
+            }else 
+            {
+                $('#Interactbtn').text("Resume");
+                $('#Resetbtn').show();
+            }
         });
 
-        $('#pausebtn').on('click',function(){
+        $('#Resetebtn').on('click',function(){
             isPause = true;
         });
 
     };
 
-    this.drawPlayer=function(){
+    /*this.drawPlayer=function(){
         if(img_num > playerImgURL.length - 1){img_num = 0;}
         var playerurl = playerImgURL[img_num];
-        //console.log(playerurl);
+        console.log(playerurl);
         $('#player').css("background-image", "url('/assets/Run/adventurer-run-01.png')" );
-        //$('#player').css("background-image", playerImgURL[img_num] );
+        $('#player').css("background-image", playerImgURL[img_num] );
         img_num ++;
-       // console.log(document.getElementById("player").style.right.substr(0,3));
+        console.log(document.getElementById("player").style.right.substr(0,3));
         
-        // if(document.getElementById("player").style.right.substr(0,3) > 450/2){
-        //     console.log("flip right");
-        //     $('#player').css("transform", "transform:rotateY(180deg)" );
-        // }else if (document.getElementById("player").style.right < 450/2){
-        //     console.log("flip left");
-        //     $('#player').css("transform", "transform:rotateY(0deg)" );
-        // }
+        if(document.getElementById("player").style.right.substr(0,3) > 450/2){
+             console.log("flip right");
+             $('#player').css("transform", "transform:rotateY(180deg)" );
+         }else if (document.getElementById("player").style.right < 450/2){
+             console.log("flip left");
+             $('#player').css("transform", "transform:rotateY(0deg)" );
+         }
 
-    };
+    };*/
     
     this.RotatePlayer=function(){
         null;
@@ -81,6 +86,17 @@ var WallBangersUI=function(){
         $(".Text").text(self.game.score);
         // self.drawPlayer();
     };
+
+    function getArray(){
+        this.game.zones_rightArray;
+        
+        game.zones_rightArray.forEach(height =>{ 
+            GenerateDangerZone("rightwall", height)
+        });
+        game.zones_leftArray.forEach(height =>{ 
+            GenerateDangerZone("leftwall", height)
+        });
+    }
         
     this.updateUI=function(){
             if (!isPause) {
@@ -101,12 +117,12 @@ var WallBangersUI=function(){
         zone.style.right = 0;
         zone.style.left = 0;
         zone.style.height = height + "px";
-        if (wallLocation == "right"){
-            zones_rightArray.push(zone);
-        }
-        else{//
-            zones_leftArray.push(zone);
-        }
+        // if (wallLocation == "right"){
+        //     zones_rightArray.push(zone);
+        // }
+        // else{//
+        //     zones_leftArray.push(zone);
+        // }
         //create a right wall zone array and a left wall zone array
         // need the coordinates of the bottom of a danger zone
         var container = document.getElementById(wallLocation);
@@ -121,25 +137,43 @@ var WallBangersUI=function(){
      */
     function CheckZones(){
 
-        // zones_array.forEach();
+        zones_leftArray.forEach(zone => {
+            if(parseInt(zone.style.top,10) >= 500 ){
+                zones_leftArray.shift();
+            }
+        });
 
+        zones_rightArray.forEach(zone => {
+            if(parseInt(zone.style.top,10) >= 500 ){
+                zones_rightArray.shift();
+            }
+        });
 
     };
 
     
     /** Moves the  Zone then calls Check Zone */
-    /*function MoveZones(){ 
-        var count = 0;
-        zones_array.forEach(zone => {
+    function MoveZones(){ 
+        var rightCount = 0;
+        var leftCount = 0;
+        zones_rightArray.forEach(zone => {
             var number = parseInt(zone.style.top,10)+ 10;
             zone.style.top = number +"px";
             console.log(zone.style.cssText);
-            count++;
+            rightCount++;
         });
-        console.log(count);
+        zones_leftArray.forEach(zone => {
+            var number = parseInt(zone.style.top,10)+ 10;
+            zone.style.top = number +"px";
+            console.log(zone.style.cssText);
+            leftCount++;
+        });
+        console.log("Right Count: " + rightCount);
+        console.log("Left Count: " + leftCount);
+        CheckZones();
 
     };
-    */
+    
 
     /**Calls Foreach loop on array */
     /*function UpdateZones(){
@@ -159,7 +193,7 @@ var WallBangersUI=function(){
     };
     
     this.initialize();
-    //setInterval(MoveZones,200);
+    setInterval(MoveZones,200);
     //setInterval(this.drawPlayer,200);
     setInterval(this.updateUI,33);
     

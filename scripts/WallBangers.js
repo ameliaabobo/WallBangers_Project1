@@ -1,25 +1,19 @@
 var wallBangers=function(){
     var self=this;
     this.options={
-        height:200, // this is the visible height of the game environment
+        height:500, // this is the visible height of the game environment
         width:680,
-        wallHeight:2000, // this is how high the wall actually is. This is going to be for programming safe zones and things like that
+        wallHeight:500, // this is how high the wall actually is. This is going to be for programming safe zones and things like that
         wallWidth:50, // idea here is to have the wall width be half the width of the environment
         obstacleSpeed:50,
         obstacleStartHeight:0,
         minX:50,
-        minY:100
+        minY:50
     }
     var zones_leftArray = [];
     var zones_rightArray = [];
     this.score=0; // This is the total number of points the player has accumulated so far
-                    //player(xPos, yPos, minX, maxX, minY, maxY, veloX, veloY)
-    /*this.topOfPreviousSafeZoneRight=0;
-    this.topOfPreviousSafeZoneLeft=0;
-    this.bottomOfPreviousSafeZoneRight=0;
-    this.bottomOfPreviousSafeZoneLeft=0;*/
-    this.ninja = new player(0+this.options.wallWidth, this.options.height, 0, this.options.width-this.options.wallWidth, 
-                            this.options.height, this.options.height - 100, 0, 0); // Add the coordinates for the ninja. The goal is to have him on the bottom of the right wall essentially
+    this.ninja = new player()
     
     
     //ZONE GENERATION PATHWAY: initialize -> RandomZone -> Generate Zone -> push to zone_array -> move zone
@@ -44,17 +38,29 @@ var wallBangers=function(){
     /**
      * IMPORTANT: Function only generates zones
      */
-    function GenerateDZone(wallLocation){  
-        if (wallLocation == "right"){//danger zone generated on right wall
-            //window is 500; 50 and 75
+    function GenerateDZone(wallLocation){ //ranges between 50 and 75 in height
+        if (wallLocation == "rightwall"){//generated on right wall
+            //var num = Math.floor(Math.random()*(75-50)+50);
             zones_rightArray.push(Math.floor(Math.random()*(75-50)+50));
-            //then call function in UI to create zone element
-
-            console.log(this.zones_rightArray);
+            
+            //zones_rightArray.push(num);
+            /*
+            console.log("num =", num)
+            for (var i in zones_rightArray){
+                console.log("in right array ", zones_rightArray[i]);
+            }
+            */
         }
-        else{//danger zone generated on left wall
+        else{//generated on left wall
+            //var num1 = Math.floor(Math.random()*(75-50)+50);
             zones_leftArray.push(Math.floor(Math.random()*(75-50)+50));
-            console.log(this.zones_leftArray);
+            //zones_leftArray.push(num1);
+            /*
+            console.log("num1=", num1)
+            for (var j in zones_leftArray){
+                console.log("in left array ", zones_leftArray[j]);
+            }
+            */
         }
     }
 
@@ -84,12 +90,17 @@ var wallBangers=function(){
     this.reset=function(){
         this.score = 0;
     }
+
+    this.updateScore = function(){
+        this.score += 1;
+    }
+
     this.initialize();
 }
 
 var player = function(xPos, yPos, minX, maxX, minY, maxY, veloX, veloY){
     var self = this;
-    this.jump = false;
+    this.jumping = false;
     this.LtoR = true;
     this.xPos = xPos;
     this.yPos = yPos;
@@ -101,54 +112,75 @@ var player = function(xPos, yPos, minX, maxX, minY, maxY, veloX, veloY){
     this.veloY = veloY;
     this.rightWall = true; // Determines which wall player is on. If on right, bool = true. If on left, bool = false.
     this.initialize = function(){};
-    this.setPosition = function(xPos, yPos){ // this is how we move the ninja
-        if(xPos < self.minX){
-            self.xPos = self.minX;
-        }
-        else if(xPos > self.maxX){
-            self.xPos = self.maxX;
-        }
-        if(yPos < self.minY){
-            self.yPos = self.minY;
-        }
-        else if(yPos > self.maxY){
-            self.yPos = self.maxY;
-        }
-    };
-    this.incrementPosition = function(amount){
-        self.setPosition(self.xPos, self.yPos + amount);
-    };
+    this.gravity = function(){
+        this.veloY -=10;
+    }
+    this.jetpack=function(){
+        this.veloY +=40;
+    }
     this.jump = function(){
-        
-        if(!jump){ //Check if already jumping
-            switch (this.LtoR) { 
-                case true: // jumping left to right
-                    //this.veloX += 20; //Left to Right   
-                    self.setPosition(xPos + 20, yPos);
-                    this.rightWall = true;                
-                    break;
-                case false: // jumping right to left
-                    //this.veloX -= 20; //Right to Left
-                    self.setPosition(xPos - 20, yPos);
-                    this.rightWall = false;
-                    break;
-            }
-            this.jump = true;
+        // var currentlyJumping = this.jumping;
+        console.log("PLAYER JUMP CALLED");
+        if(this.jumping == false && (this.xPos ==0 || this.xPos == 450)){
+            if(this.LtoR == true){
+                    this.veloX -= 20;
+                    this.jumping = true;
+                }else{
+                    this.veloX += 20;  
+                    this.jumping = true;
+                }    
+            this.veloY = 50;
         }
-        this.veloY += 15; //Gravity
     };
-    this.isCollide=function(/*add possible parameters*/){
-        //first check if player is on right or left wall
-        if (this.rightWall == true){ //player lands on right wall 
-            
-        }
-        else{ //player lands on left wall
 
+    this.Flip=function(){
+        if(this.xPos > 450/2){
+            console.log("flip right");
+            $('#player').css({transform: 'rotateY(180deg)'} );
+        }else if (this.xPos < 450/2){
+            console.log("flip left");
+            $('#player').css({transform: 'rotateY(0deg)'} );
         }
-        // check if player is in a safe zone of not
-        // call isCollide after every jump
+    }
+
+
+
+
+    this.isCollide=function(/*add possible parameters*/){
+       
+        this.jumping = (this.xPos >= 450 || this.xPos <= 0) ? false : this.jumping; 
+
+        this.xPos = (this.xPos > 450 ) ? 450 : this.xPos;
+        this.xPos =  (this.xPos < 0 ) ? 0 : this.xPos;
+
+        this.yPos = (this.yPos < 0  ) ? 0 : this.yPos;
+        this.yPos =  (this.yPos > 470 ) ? 470 : this.yPos;
+        
+
+        this.veloX = (this.xPos >= 450 || this.xPos <= 0) ? 0: this.veloX;
+        this.yPos = (this.jumping && (this.xPos >= 450 || this.xPos <= 0)) ? this.yPos : this.yPos;
+        // this.veloY = (!this.jumping && (this.xPos >= 450 || this.xPos <= 0)) ? 0: this.veloy;
+
+        this.LtoR = (this.xPos == 450) ? true: this.LtoR;
+        this.LtoR = (this.xPos == 0) ? false: this.LtoR;
+
+
+        
     };
-}
+    
+    this.updatePlayer = function(){
+        self.xPos += self.veloX;
+        self.yPos += self.veloY;
+        if(this.jump){ 
+            this.gravity();
+        }else{
+            // this.jetpack();
+        }
+        this.Flip();
+
+    };
+    
+};
 
 /*var hole=function(xPos, yPos, minY, maxY){
     this.length = Math.floor((Math.random() * 100) + 1);
@@ -166,3 +198,11 @@ var player = function(xPos, yPos, minX, maxX, minY, maxY, veloX, veloY){
         }
     }
 }*/
+
+
+
+
+
+
+
+
