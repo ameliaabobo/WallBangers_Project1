@@ -75,12 +75,10 @@
     right: 50px;
 }
 #player{
-    /* background-image: url("/assets/Run/adventurer-run-01.png"); */
-    background: no-repeat;
+    background-image: url("/assets/Run/adventurer-run.gif");
+    background-repeat: no-repeat;
+    background-position: right;
     transform: rotateY(0deg);
-    /* transform: rotateY(0deg); */
-    /* transform:rotateY(0deg); Rotates background around the y axis */
-    /* transform: rotateY(180deg); */
     height: 48px;
     width: 48px;
     position: absolute;

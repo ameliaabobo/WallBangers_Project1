@@ -51,23 +51,23 @@ function player(){
     this.veloY = 0;
     this.initialize = function(){};
     this.gravity = function(){
-        this.veloY -= 10;
+        this.veloY -= 3;
     };
     this.jetpack = function(){
-        this.veloY += 40;
+        this.veloY += 20;
     }
     this.jump = function(){
         
         // var currentlyJumping = this.jumping;
         if(this.jumping == false && (this.xPos ==0 || this.xPos == 430)){
             if(this.LtoR == true){
-                    this.veloX -= 35;
+                    this.veloX -= 15;
                     this.jumping = true;
                 }else{
-                    this.veloX += 35;  
+                    this.veloX += 15;  
                     this.jumping = true;
                 }    
-            this.veloY = 60;
+            this.veloY = 20;
         }
         // this.jetpack();
        
@@ -76,10 +76,10 @@ function player(){
     this.Flip=function(){
         if(this.xPos > 450/2){
             console.log("flip right");
-            $('#player').css({transform: 'rotateY(180deg)'} );
+            $('#player').css({transform: 'rotateY(180deg)', backgroundPosition: '-50% 50%'} );
         }else if (this.xPos < 450/2){
             console.log("flip left");
-            $('#player').css({transform: 'rotateY(0deg)'} );
+            $('#player').css({transform: 'rotateY(0deg)', backgroundPosition: 'right'} );
         }
     }
     
@@ -111,9 +111,10 @@ function player(){
     this.updatePlayer = function(){
         self.xPos += self.veloX;
         self.yPos += self.veloY;
-        if(this.jump){ 
+        if(this.jumping){ 
             this.gravity();
         }else{
+            self.veloY = 0;
             // this.jetpack();
         }
         this.Flip();
