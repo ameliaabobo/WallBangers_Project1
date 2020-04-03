@@ -7,6 +7,8 @@ var WallBangersUI=function(){
     let img_num = 0;
     var zones_leftArray = [];/** Holds Zones */
     var zones_rightArray = [];
+    var collec_leftArray = [];
+    var collec_rightArray = [];
     // this.img_num = undefined;
     
     this.initialize=function()
@@ -87,12 +89,21 @@ var WallBangersUI=function(){
         // self.drawPlayer();
     };
 
-    function getArray(){ // the height property is being obtained from Wallbangers.js
+    function getZoneArray(){ // the height property is being obtained from Wallbangers.js
         self.game.zones_rightArrayHeight.forEach(height =>{ 
             GenerateDangerZone("rightwall", height)
         });
         self.game.zones_leftArrayHeight.forEach(height =>{ 
             GenerateDangerZone("leftwall", height)
+        });
+    }
+
+    function getCollecArray(){
+        self.game.collec_rightArrayHeight.forEach(height =>{
+            GenerateCollectibles("rightwall", height);
+        });
+        self.game.collec_leftArrayHeight.forEach(height=>{
+            GenerateCollectibles("leftwall", height);
         });
     }
         
@@ -120,12 +131,29 @@ var WallBangersUI=function(){
         container.insertAdjacentElement("afterbegin",zone);
     }
 
+    function GenerateCollectibles(wallLocation, height){
+        var collec = document.createElement("div")
+        collec.style.top= "10px";
+        collec.style.position = "absolute";
+        collec.style.right = 0;
+        collec.style.left = 0;
+        collec.style.height = height + "px";
+        if(wallLocation == "right"){
+            collec_rightArray.push(collec);
+        }
+        else{
+            collec_leftArray.push(collec);
+        }
+    }
+
     this.updateUI=function(){
         if (!isPause) {
             var result= self.game.update();
             self.refreshView(); 
             self.game.zRight = zones_rightArray;
             self.game.zLeft = zones_leftArray;
+            self.game.cRight = collec_rightArray;
+            self.game.cLeft = collec_leftArray;
         } 
        
 };
@@ -145,6 +173,24 @@ var WallBangersUI=function(){
             if(parseInt(zone.style.top,10) >= 500 ){
                 zones_rightArray.shift();
                 self.game.zones_rightArrayHeight.shift();
+            }
+        });
+
+    };
+
+    function CheckCollecs(){
+
+        collec_leftArray.forEach(collec => {
+            if(parseInt(collec.style.top,10) >= 500 ){
+                collec_leftArray.shift();
+                self.game.collec_leftArrayHeight.shift();
+            }
+        });
+
+        collec_rightArray.forEach(collec => {
+            if(parseInt(collec.style.top,10) >= 500 ){
+                collec_rightArray.shift();
+                self.game.collec_rightArrayHeight.shift();
             }
         });
 
@@ -173,6 +219,26 @@ var WallBangersUI=function(){
 
     };
     
+    function MoveCollecs(){ 
+        var rightCt = 0;
+        var leftCt = 0;
+        collec_rightArray.forEach(collec => {
+            var num = parseInt(collec.style.top,10)+ 10;
+            collec.style.top = num +"px";
+            console.log(collec.style.cssText);
+            rightCt++;
+        });
+        collec_leftArray.forEach(collec => {
+            var num = parseInt(collec.style.top,10)+ 10;
+            collec.style.top = num +"px";
+            console.log(collec.style.cssText);
+            leftCt++;
+        });
+        console.log("Right Count: " + rightCt);
+        console.log("Left Count: " + leftCt);
+        CheckCollecs();
+
+    };
 
     /**Calls Foreach loop on array */
     /*function UpdateZones(){
@@ -193,6 +259,7 @@ var WallBangersUI=function(){
     
     this.initialize();
     setInterval(MoveZones,200);
+    setInterval(MoveCollecs, 200);
     //setInterval(this.drawPlayer,200);
     setInterval(this.updateUI,33);
     

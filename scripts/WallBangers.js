@@ -145,6 +145,8 @@ var player = function(xPos, yPos, minX, maxX, minY, maxY, veloX, veloY){
     this.veloY = veloY;
     var zRight = [];
     var zLeft = [];
+    var cRight = [];
+    var cLeft = [];
     this.rightWall = true; // Determines which wall player is on. If on right, bool = true. If on left, bool = false.
     this.initialize = function(){};
     this.gravity = function(){
@@ -191,12 +193,24 @@ var player = function(xPos, yPos, minX, maxX, minY, maxY, veloX, veloY){
                     this.isDead = true;
                 }
             })
+            cRight.forEach(collec => {
+                this.bottom = collec.style.top + collec.style.height; // this is so we can get the range of collidable areas. Essentially if the player y location is greater than or equal to the top, but less than or equal to the bottom, then we have a collision
+                if(this.yPos >= collec.style.top && this.yPos <= this.bottom){
+                    this.score += 50;
+                }
+            })
         }
         else{
             zLeft.forEach(zone => {
                 this.bottom = zone.style.top + zone.style.height;
                 if(this.yPos >= zone.style.top && this.yPos <= this.bottom){
                     this.isDead = true;
+                }
+            })
+            cLeft.forEach(collec => {
+                this.bottom = collec.style.top + collec.style.height;
+                if(this.yPos >= collec.style.top && this.yPos <= this.bottom){
+                    this.score += 50;
                 }
             })
         }
