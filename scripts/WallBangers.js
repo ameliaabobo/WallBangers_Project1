@@ -59,15 +59,15 @@ function player(){
     this.jump = function(){
         
         // var currentlyJumping = this.jumping;
-        if(this.jumping == false && (this.xPos ==0 || this.xPos == 450)){
+        if(this.jumping == false && (this.xPos ==0 || this.xPos == 430)){
             if(this.LtoR == true){
-                    this.veloX -= 20;
+                    this.veloX -= 35;
                     this.jumping = true;
                 }else{
-                    this.veloX += 20;  
+                    this.veloX += 35;  
                     this.jumping = true;
                 }    
-            this.veloY = 50;
+            this.veloY = 60;
         }
         // this.jetpack();
        
@@ -85,25 +85,28 @@ function player(){
     
     this.isCollide=function(/*add possible parameters*/){
        
-        this.jumping = (this.xPos >= 450 || this.xPos <= 0) ? false : this.jumping; 
+        this.jumping = (this.xPos >= 430 || this.xPos <= 0) ? false : this.jumping; 
 
-        this.xPos = (this.xPos > 450 ) ? 450 : this.xPos;
+        this.xPos = (this.xPos > 430 ) ? 430 : this.xPos;
         this.xPos =  (this.xPos < 0 ) ? 0 : this.xPos;
 
         this.yPos = (this.yPos < 0  ) ? 0 : this.yPos;
         this.yPos =  (this.yPos > 470 ) ? 470 : this.yPos;
         
 
-        this.veloX = (this.xPos >= 450 || this.xPos <= 0) ? 0: this.veloX;
-        this.yPos = (this.jumping && (this.xPos >= 450 || this.xPos <= 0)) ? this.yPos : this.yPos;
+        this.veloX = (this.xPos >= 430 || this.xPos <= 0) ? 0: this.veloX;
+        this.yPos = (this.jumping && (this.xPos >= 430 || this.xPos <= 0)) ? this.yPos : this.yPos;
         // this.veloY = (!this.jumping && (this.xPos >= 450 || this.xPos <= 0)) ? 0: this.veloy;
 
-        this.LtoR = (this.xPos == 450) ? true: this.LtoR;
+        this.LtoR = (this.xPos == 430) ? true: this.LtoR;
         this.LtoR = (this.xPos == 0) ? false: this.LtoR;
 
 
         
     };
+
+
+    
     
     this.updatePlayer = function(){
         self.xPos += self.veloX;
