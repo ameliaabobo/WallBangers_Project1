@@ -146,8 +146,6 @@ var WallBangersUI=function(){
     };
 
 
-
-
     /**
      * Description:
      *      Randomly generates a zone on the right of left wall
@@ -163,9 +161,6 @@ var WallBangersUI=function(){
                 GenerateZone("leftwall");
                 break;
         }
-
-        // if(Math.random())
-
     }
 
 
