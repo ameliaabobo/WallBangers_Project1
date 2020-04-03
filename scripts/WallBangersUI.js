@@ -23,7 +23,9 @@ var WallBangersUI=function(){
      
             $('#GameStopped').show();
             $('#GameRunning').hide();
-     
+
+            $('#Resetbtn').hide()
+
         
         // new KeyboardEvent("onKeyPress",self.game.ninja.jump());
         $('body').keypress(function(event){
@@ -40,12 +42,19 @@ var WallBangersUI=function(){
             RandomZone();
         });
 
-        $('#resumebtn').on('click',function(){
-            $('#resumebtn').text("Resume");
-            isPause = false;
+        $('#Interactbtn').on('click',function(){
+            isPause = !isPause;
+            if(isPause == false){
+            $('#Resetbtn').hide();
+            $('#Interactbtn').text("Pause");
+            }else 
+            {
+                $('#Interactbtn').text("Resume");
+                $('#Resetbtn').show();
+            }
         });
 
-        $('#pausebtn').on('click',function(){
+        $('#Resetebtn').on('click',function(){
             isPause = true;
         });
 
