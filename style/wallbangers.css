@@ -50,7 +50,8 @@
     overflow:hidden;
 }
 #leftwall{
-    background: black;
+    background-image: url(/assets/cobblestone.jpg);
+    background-size: 100px;
     height: 500px;
     width: 50px;
     position: absolute;
@@ -67,7 +68,8 @@
     overflow:hidden;
 }
 #rightwall{
-    background: black;
+    background-image: url(/assets/cobblestone.jpg);
+    background-size: 100px;
     height: 500px;
     width: 50px;
     position: absolute;
